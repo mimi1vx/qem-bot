@@ -49,9 +49,9 @@ def normalize_results(result: str) -> str:
     return "failed"
 
 
-def __retry(retries: Optional[int]) -> Session:
+def __retry(retries: Optional[int], backoff_factor: float) -> Session:
 
-    adapter = HTTPAdapter(max_retries=Retry(retries, backoff_factor=5))
+    adapter = HTTPAdapter(max_retries=Retry(retries, backoff_factor=backoff_factor))
     http = requests.Session()
     http.mount("https://", adapter)
     http.mount("http://", adapter)
@@ -59,7 +59,7 @@ def __retry(retries: Optional[int]) -> Session:
     return http
 
 
-no_retry = __retry(None)
-retry3 = __retry(3)
-retry5 = __retry(5)
-retry20 = __retry(20)
+no_retry = __retry(None, 0)
+retry3 = __retry(3, 2)
+retry5 = __retry(5, 1)
+retry10 = __retry(10, 0.1)

@@ -19,6 +19,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Trigger and monitor openQA test
-        run:
-        - echo $GH_REF
-        - echo $GH_REPO
+        run: echo $GH_REF; echo $GH_REPO

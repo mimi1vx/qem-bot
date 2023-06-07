@@ -9,7 +9,9 @@ on:
   workflow_dispatch:
 env:
    GH_REPO: ${{github.event.pull_request.head.repo.full_name}}
-   GH_REF: ${{github.event.pull_request.head.repo.ref}}
+   GH_REF: ${{github.event.pull_request.head.ref}}
+   GH_URL: ${{github.event.pull_request.url}}
+   GH_REF_BASE: ${{github.event.pull_request.base.ref}}
 
 jobs:
   trigger_and_monitor_openqa:

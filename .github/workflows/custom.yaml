@@ -1,0 +1,22 @@
+---
+name: openQA test
+# yamllint disable-line rule:truthy
+on:
+  pull_request_target:
+  # Note how this runs on:pull_request_target and not on:pull_request!
+  # The difference is that this runs always with the context of the master
+  # branch. This is necessary to allow accessing the API credential secrets.
+  workflow_dispatch:
+env:
+   GH_REPO: ${{github.event.pull_request.head.repo.full_name}}
+   GH_REF: ${{github.event.pull_request.head.repo.ref}}
+
+jobs:
+  trigger_and_monitor_openqa:
+    runs-on: ubuntu-latest
+    container:
+      image: registry.opensuse.org/devel/openqa/containers/tumbleweed:client
+    steps:
+      - uses: actions/checkout@v3
+      - name: Trigger and monitor openQA test
+        run: echo "$GH_REF echo $GH_REPO"
